@@ -4,6 +4,7 @@
 
 int main()
 {
+    what_message("", "");
     printf("All tests passed\n");
     return 0;
 }
