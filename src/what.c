@@ -1,5 +1,34 @@
 #include "what.h"
 
+int __encode_url(char *dest, size_t dest_size, const char *src)
+{
+    size_t di = 0;
+
+    for (size_t si = 0; src[si] != '\0'; si++)
+    {
+        unsigned char c = (unsigned char)src[si];
+
+        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~')
+        {
+            if (di + 1 >= dest_size)
+                return -1;
+            dest[di++] = c;
+        }
+        else
+        {
+            if (di + 3 >= dest_size)
+                return -1;
+            snprintf(&dest[di], 4, "%%%02X", c);
+            di += 3;
+        }
+    }
+
+    if (di >= dest_size)
+        return -1;
+    dest[di] = '\0';
+    return 0;
+}
+
 int what_message(const char number[], const char message[])
 {
     char encodedMessage[256];
@@ -7,12 +36,12 @@ int what_message(const char number[], const char message[])
     char url[512];
     char command[700];
 
-    if (encode_url(encodedMessage, sizeof(encodedMessage), message) != 0)
+    if (__encode_url(encodedMessage, sizeof(encodedMessage), message) != 0)
     {
         printf("Failed to encode message buffer too small.\n");
     }
 
-    if (encode_url(encodedNumber, sizeof(encodedNumber), number) != 0)
+    if (__encode_url(encodedNumber, sizeof(encodedNumber), number) != 0)
     {
         printf("Failed to encode number buffer too small.\n");
     }
