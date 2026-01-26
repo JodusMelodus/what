@@ -33,7 +33,7 @@ int what_message(const char *number, const char *message);
 
 **Returns:**
 - `0` on success
-- `-1` on error (typically buffer overflow during URL encoding)
+- `-1` on error (typically buffer overflow during URL encoding or failed memory allocation)
 
 **Example:**
 ```c
@@ -87,9 +87,9 @@ int main()
 
 | Platform | Status | Notes |
 |----------|--------|-------|
-| Windows  | ✅ Supported | Automatic message sending via keyboard input |
-| macOS    | 🔃 Incomplete | Uses `open` command |
-| Linux    | 🔃 Incomplete | Uses `xdg-open` command |
+| Windows | ✅ Supported | Automatic message sending via keyboard input |
+| macOS | 🔃 Incomplete | Uses `open` command |
+| Linux | 🔃 Incomplete | Uses `xdg-open` command |
 
 ## License
 
